@@ -32,11 +32,20 @@ export default class Level{
         //najpierw szukamy nieklikniętego sąsiada czerwonego wierzchołka, który ma szansę jeszcze być nieszczęśliwy
         let redVertices = this.getColoredVertices(red);
         let sortedRedVertices = redVertices.sort((a, b) => a.neighNumber - b.neighNumber);
+        let unclickedWithNoGreenNeigh = [];
         for (let item of sortedRedVertices) {
             let greenNeighbours = item.neighbours.filter(i => i.color === green); //po to żeby przypadki nieoptymalne (czyli kolorowania sąsiadów tych co i tak będą happy)
             if (greenNeighbours.length < item.neighNumber/2) {
                 let unclicked = item.neighbours.filter(j => j.isClicked == false);
-                if (unclicked.length != 0) {
+                for (let vertex of unclicked) {
+                    if (vertex.neighbours.filter(v => v.color === green).length === 0) {
+                        unclickedWithNoGreenNeigh.push(vertex)
+                    }
+                }
+                if (unclickedWithNoGreenNeigh != 0) {
+                    return unclickedWithNoGreenNeigh[0];
+                }
+                else if (unclicked.length != 0) {
                     return unclicked[0];
                 }
             }
