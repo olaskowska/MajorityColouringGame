@@ -51,11 +51,12 @@ export default class Level{
                 let unclickedNeighOfNeigh = vertex.neighbours.filter(v => v.isClicked == false);
                 for (let vert of unclickedNeighOfNeigh) {
                     if (vert.neighbours.filter(k => k.color === green).length === 0) {
-                        withNonGreenNeighNeigh.push(vert)
+                        withNonGreenNeighNeigh.push(vert);
                     }
                 }
-                if (withNonGreenNeighNeigh.length > 0) {
-                    return withNonGreenNeighNeigh[0];
+                let sortedWithNonGreenNeighNeigh = withNonGreenNeighNeigh.sort((a,b) => a.neighNumber - b.neighNumber);
+                if (sortedWithNonGreenNeighNeigh.length > 0) {
+                    return sortedWithNonGreenNeighNeigh[0];
                 }                
             }
         }
